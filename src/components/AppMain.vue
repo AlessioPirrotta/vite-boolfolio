@@ -23,8 +23,8 @@ export default{
       .then(res => {
         
         this.arrayProjct= res.data.projects.data
-        this.currentPage=res.data.projects.data.current_page
-        this,this.lastPage= res.data.projects.data.last_page
+        this.currentPage=res.data.projects.current_page
+        this.lastPage= res.data.projects.last_page
         console.log(this.arrayProjct)
       })
 
@@ -32,7 +32,7 @@ export default{
     
   },
   mounted() {
-    this.getProjects()
+    this.getProjects(1)
   },
 }
 
@@ -44,11 +44,12 @@ export default{
     <a class="py-1" v-for="(item, index) in arrayProjct" :key="item.id">{{ item.title }}</a>
     <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+      <button class="page-link"  @click="getProjects(currentPage - 1)">Previous</button>
+    </li>
+    <li class="page-item" :class="{ disabled: currentPage === lastPage }">
+      <button class="page-link" @click="getProjects(currentPage + 1)">Next</button>
+    </li>
   </ul>
 </nav>
 
