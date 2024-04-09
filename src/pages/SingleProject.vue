@@ -1,27 +1,36 @@
 <script>
-// import AppHeader from './components/AppHeader.vue'
+import axios from 'axios';
 
 export default{
-    components:{
+    name:'SingleProject',
+    components: {
        
     },
   data() {
     return {
-      
+      project: null
     }
   },
   methods: {
- 
+    getSingleProject(){
+      axios.get(`http://127.0.0.1:8000/api/test/${this.$route.params.slug}`)
+      .then(res => 
+        {
+            this.project = res.data.projects;
+        });
+        
+        console.log(this.project);
+    }
     
   },
-  mounted() {
-
+  created() {
+    this.getSingleProject();
   },
 }
 </script>
 
 <template>
-    <h1>Single Post</h1>
+    <h1>{{project.title}}</h1>
 </template>
 
 <style scoped>
